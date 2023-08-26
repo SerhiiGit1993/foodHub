@@ -6,7 +6,7 @@ from django.utils.text import slugify
 
 
 # class Item create for main information of products
-class Item(models.Model):
+class Items(models.Model):
     name = models.CharField(max_length=150)
     type = models.CharField(max_length=150)
     description = models.TextField(blank=True)
@@ -16,10 +16,11 @@ class Item(models.Model):
     def upload_to(instance, filename):
         return f"media/{instance.type}/{filename}"
 
-    image = models.ImageField(upload_to=upload_to)
+    image = models.ImageField(upload_to=upload_to, blank=True)
 
     is_available = models.BooleanField(default=False)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, blank=True)
+    seller = models.TextField(blank=True)
 
 # auto-creating slug and description for products
     def save(self, *args, **kwargs):
@@ -27,3 +28,7 @@ class Item(models.Model):
             self.description = f"This is a {self.type} named {self.name}."
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+
+#name for admin panel
+    def __str__(self):
+        return self.name

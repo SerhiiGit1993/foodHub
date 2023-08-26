@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+
+
+{% for name in page_obj %}
+<p>{{ name }}</p>
+{% endfor %}
+
+
+{% if page_obj.has_previous %}
+<p><a href="?page={{ page_obj.previous_page_number }}">prev</a></p>
+{% endif %}
+
+
+{% for p in page_obj.paginator.page_range %}
+
+   {% if page_obj.number == p %}
+        <p> {{ p }}</p>
+    {% elif p >= page_obj.number|add:-1 and p <= page_obj.number|add:1  %}
+        <a href="?page={{ p }}">{{ p }}</a>
+    {% endif %}
+{% endfor %}
+
+
+{% if page_obj.has_next %}
+<p><a href="?page={{ page_obj.next_page_number }}">next</a></p>
+{% endif %}
+
+<!--{% for i in items %}-->
+<!--{% if i.image %}-->
+<!--    <p><img src="{{ i.image.url }}"></p>-->
+<!--{% endif %}-->
+
+
+<!--    <h1>{{ i.name }}</h1>-->
+<!--    <p>type: {{ i.type }}</p>-->
+<!--    <p>Description: {{ i.description }}</p>-->
+<!--    <p>is_available: {{ i.is_available }}</p>-->
+<!--{% endfor %}-->
+
+</body>
+</html>
